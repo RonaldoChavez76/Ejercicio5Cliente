@@ -10,5 +10,6 @@ FROM eclipse-temurin:21-jre-jammy
 WORKDIR /app
 COPY --from=builder /build/target/*.jar /app/app.jar
 
+ENV JAVA_OPTS="-Xms96m -Xmx256m -XX:+UseSerialGC"
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["sh", "-c", "exec java ${JAVA_OPTS} -jar /app/app.jar"]
